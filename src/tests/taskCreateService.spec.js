@@ -26,7 +26,6 @@ describe("TaskCreateService", () => {
         }
         
         const userCreated = await userCreateService.execute(user)
-        console.log(userCreated);
 
         const task = {
             title: "TarefaJest",

@@ -27,10 +27,10 @@ class TaskRepositoryInMemory{
         return task
     }
 
-    async deleteTask({id}){
+    async deleteTasks({id}){
         const task = this.listTaskById({id})
-        this.tasks.splice(task)
-        return task
+        return this.tasks.splice(task, 1)
+        
     }
 }
 
