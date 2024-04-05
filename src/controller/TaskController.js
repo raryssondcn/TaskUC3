@@ -1,5 +1,6 @@
 const TaskRepository = require("../Repositories/taskRepository/TaskRepository")
 const TaskDeleteService = require("../Services/TaskServices/DeleteServiceTask")
+const TaskCompletedService = require("../Services/TaskServices/TaskCompletedService")
 const TaskCreateService = require("../Services/TaskServices/TaskCreateService")
 const TaskListById = require("../Services/TaskServices/TaskListById")
 const TaskListService = require("../Services/TaskServices/TaskListService")
@@ -13,15 +14,18 @@ const taskListService = new TaskListService(taskRepository)
 const taskListById = new TaskListById(taskRepository)
 const taskUpdateService = new UpdatedTaskService(taskRepository)
 const taskDeleteService = new TaskDeleteService(taskRepository)
+const taskCompletedService = new TaskCompletedService(taskRepository)
 
 class TaskController{
     async createTask(req, res){
-        
+        const {user_id} = req.params
         const {title, description} = req.body
-        
-        await taskCreatedService.execute({title, description})
 
-            res.status(201).json(task)
+        await knex("users").where({id: user_id}).first()
+        
+        await taskCreatedService.execute({user_id, title, description})
+
+            res.status(201).json("Criado")
     }
 
     async listTask(req, res){
@@ -53,7 +57,7 @@ class TaskController{
     async updateTaskStatus(req, res){
         const {id} = req.params
 
-        await knex("tasks").where({id}).update({isCompleted: true})
+        await taskCompletedService.execute({id})
         res.status(201).json("Tarefa concluida")
     }
 }

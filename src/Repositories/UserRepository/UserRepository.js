@@ -33,6 +33,10 @@ class UserRepository{
         const user = await knex("users").where({id}).delete()
         return user
     }
+    async adminUser({id}){
+        const user = await knex("users").where({id}).update({isAdmin: true})
+        return user
+    }
 }
 
 module.exports = UserRepository

@@ -2,7 +2,7 @@ const knex = require("../../database/knex")
 
 class TaskRepository{
     async createTask({title, description}){
-
+        
         const isCompleted = false
         const taskId = await knex("tasks").insert({title, description, isCompleted})
         return{id: taskId}
@@ -30,6 +30,10 @@ class TaskRepository{
     }
     async deleteTasks({id}){
         const task = await knex("tasks").where({id}).delete()
+        return task
+    }
+    async updateTaskStatus({id}){
+        const task = await knex("tasks").where({id}).update({isCompleted: true})
         return task
     }
 }

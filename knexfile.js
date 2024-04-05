@@ -7,7 +7,7 @@ module.exports = {
       host: 'localhost',
       user: 'root',
       password: '',
-      database: 'taskmanager_knex'
+      database: 'tarefas-jest'
 
     },
     migrations: {

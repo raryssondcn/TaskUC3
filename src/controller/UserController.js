@@ -1,4 +1,5 @@
 const UserRepository = require("../Repositories/UserRepository/UserRepository")
+const AdminUserService = require("../Services/UserServices/AdminUserService")
 const UserCreateService = require("../Services/UserServices/UserCreateService")
 const UserDeleteService = require("../Services/UserServices/UserDeleteService")
 const UserListByIdService = require("../Services/UserServices/UserListById")
@@ -14,6 +15,7 @@ const userListService = new UserListService(userRepository)
 const userListById = new UserListByIdService(userRepository)
 const userUpdateService = new UserUpdateService(userRepository)
 const userDeleteService = new UserDeleteService(userRepository)
+const adminUserService = new AdminUserService(userRepository)
 
 class UserController{
     async createUser(req, res){
@@ -55,7 +57,7 @@ class UserController{
     async adminUser(req, res){
         const {id} = req.params
 
-        await knex("users").where({id}).update({isAdmin: true})
+        await adminUserService.execute({id})
         res.status(201).json("Admin configurado")
     }
 
